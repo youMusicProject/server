@@ -1,20 +1,30 @@
-const { auth0 } = require('../config/config')
-const { expressjwt: jwt } = require('express-jwt')
-const jwksRsa = require('jwks-rsa')
+const express = require('express');
+const app = express();
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
 
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `${auth0.issuer}.well-known/jwks.json`
-  }),
 
-  audience: auth0.audience,
-  issuer: auth0.issuer,
-  algorithms: ['RS256']
-})
+
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://dev-h7p0gvmne4mrdzom.us.auth0.com/.well-known/jwks.json'
+    }),
+    audience: 'http://localhost:4000',
+    issuer: 'https://dev-h7p0gvmne4mrdzom.us.auth0.com/',
+    algorithms: ['RS256']
+});
+
+// app.use(jwtCheck);
+
+// app.get('/authorized', function (req, res) {
+//     res.send('Secured Resource');
+// });
+
+// app.listen(port);
 
 module.exports = {
-  checkJwt
-}
+    jwtCheck
+  }

@@ -24,8 +24,8 @@ const CONFIG = {
     },
     auth0: {
       client_origin: process.env.CLIENT_ORIGIN_URL,
-      audience: process.env.AUTH0_AUDIENCE
-    //   issuer: process.env.AUTH0_ISSUER
+      audience: process.env.AUTH0_AUDIENCE,
+      issuer: process.env.AUTH0_ISSUER
     }
   },
   production: {

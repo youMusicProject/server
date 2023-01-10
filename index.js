@@ -2,6 +2,7 @@
 const connection = require("./database/connection");
 const dotenv = require("dotenv");
 const app = require("./src/server");
+const config = require("./src/config/config");
 
 const port = 4000;
 
@@ -9,12 +10,13 @@ const port = 4000;
 dotenv.config();
 
 // Conexion a la DB
-connection();
-
-
+connection().then(async function onServerInit () {
+    config.logger.info('DB connected');
 
 
 // Escuchar peticiones
-app.listen(port, () => {
+    app.listen(config.app.PORT, () => {
     console.log("Estoy escuchando en el puerto " + process.env.PORT);
+})
+
 })
