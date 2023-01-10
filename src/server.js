@@ -1,6 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const userRouter = require("./routes/user.routes");
+const jwksRsa = require('jwks-rsa');
 
 // Crear servidor node
 const app = express();
