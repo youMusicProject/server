@@ -13,6 +13,8 @@ router.get("/prueba", (req, res) => {
 });
 
 router.get("/get", playlistController.getAllPlaylists)
+// VALIDAR SI ESTA LOGEADO CON UN USUARIO?
+router.post('/createplaylist', playlistController.createPlaylist)
 
 
 module.exports = router;

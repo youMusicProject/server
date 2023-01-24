@@ -1,13 +1,16 @@
 const { Schema, model } = require("mongoose");
 
 const ArtistSchema = Schema({
+    userId: {
+        type: String,
+        default: ""
+    },
     name: {
         type: String,
         required: true
     },
     genres: {
         type: Array,
-        required: true,
         default: []
     },
     views: {

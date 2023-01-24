@@ -3,7 +3,6 @@ const connection = require("./database/connection");
 const dotenv = require("dotenv");
 const app = require("./src/server");
 
-const port = 4000;
 
 // Config dotenv
 dotenv.config();
@@ -11,9 +10,10 @@ dotenv.config();
 connection();
 
 
+const port = process.env.PORT;
 
 
 // Escuchar peticiones
 app.listen(port, () => {
-    console.log("Estoy escuchando en el puerto " + process.env.SERVER_PORT);
+    console.log("Estoy escuchando en el puerto " + port);
 })
