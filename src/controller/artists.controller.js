@@ -8,18 +8,44 @@ const getAllArtists = (req, res) => {
             return res.status(404).json({
                 status: "error",
                 mensaje: "Hay un error, o no se ha encontrado ninguna cancion"
-            })
+            });
         }
         return res.status(200).json({
             status: "success",
             info: data,
             mensaje: "Las caciones estan disponibles en .tracks!"
-        })
-    })
+        });
+    });
 }
+
+const userToArtist = (req, res) => {
+    try {
+        // Recoger datos del body
+        const params = req.body;
+        // creamos el nuevo artista
+        const new_artist = new Artist(params);
+        // Guardamos el nuevo artista
+        new_artist.save((err, data) => {
+            if (err) throw err;
+            //devolver el post
+            return res.status(200).json({
+                status: "success",
+                info: data,
+                mensaje: "El artista ha sido creado"
+            });
+        });
+    } catch (error) {
+        return res.status(404).json({
+            status: "error",
+            mensaje: "Hay un error al crear el artista"
+        });
+    }
+}
+
 
 
 // Export
 module.exports = {
-    getAllArtists
+    getAllArtists,
+    userToArtist
 }

@@ -2,7 +2,7 @@
 const User = require("../models/users.model");
 
 const checkUser = (req, res) => {
-    const params = req.params
+    const params = req.params;
     User.find({ email: params.email }, (error, data) => {
         if (error || !data) {
             return res.status(500).json({
@@ -81,8 +81,8 @@ const editUser = (req, res) => {
             mensaje: "El usuario se ha editado correctamente"
         })
     })
-
 }
+
 
 
 // Export

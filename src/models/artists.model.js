@@ -19,7 +19,7 @@ const ArtistSchema = Schema({
     },
     thumbnail: {
         type: String,
-        required: true
+        default: ""
     },
     
 });
