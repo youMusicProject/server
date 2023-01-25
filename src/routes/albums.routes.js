@@ -19,6 +19,8 @@ router.post("/new", jwtCheck, albumController.newAlbum)
 
 
 
+router.delete("/delete/:id", jwtCheck, albumController.deleteAlbum)
+
 
 
 module.exports = router;

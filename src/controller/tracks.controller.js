@@ -50,14 +50,12 @@ const editTrack = (req, res) => {
         if (error || !data) {
             return res.status(400).json({
                 status: "error",
-                response: false,
                 mensaje: "No se ha editado la cancion"
             });
         }
         return res.status(200).json({
             status: "success",
             info: data,
-            response: true,
             mensaje: "La cancion se ha editado correctamente"
         });
     });
