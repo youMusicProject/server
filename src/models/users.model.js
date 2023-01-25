@@ -28,6 +28,10 @@ const UserSchema = Schema({
             default: "dafault.png"
         },
     },
+    role: {
+        type: String,
+        default: "user"
+    },
     creationDate: {
         type: Date,
         default: Date.now()

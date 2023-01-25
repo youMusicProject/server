@@ -7,11 +7,7 @@ const jwtCheck = require("../middlewares/jwtCheck.middleware");
 
 
 router.get("/get", artistController.getAllArtists)
-router.get("/prueba", jwtCheck, (req,res) => {
-    return res.json({
-        mensaje:"hola"
-    })
-})
+
 
 
 router.post("/new", jwtCheck, artistController.userToArtist)

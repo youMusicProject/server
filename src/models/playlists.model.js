@@ -29,6 +29,3 @@ const PlaylistSchema = Schema({
 });
 
 module.exports = model("Playlist", PlaylistSchema, "playlists");
-
-
-
