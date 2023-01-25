@@ -43,7 +43,6 @@ const createPlaylist = (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(400).json({
             status: "error",
             mensaje: "No se ha guardado el post de playlist"
@@ -51,8 +50,54 @@ const createPlaylist = (req, res) => {
     }
 }
 
+const editPlaylist = (req, res) => {
+    const playlistId = req.params.id;
+    const body = req.body;
+
+    try {
+        Playlist.findByIdAndUpdate(playlistId, body, {new: true}, (error, data) => {
+            if (error || !data) {
+                return res.status(400).json({
+                    status: "error",
+                    mensaje: "No se ha guardado el post de playlist"
+                })
+            }
+            return res.status(200).json({
+                status: "success",
+                info: data,
+                mensaje: "La playlist se ha editado correctamente"
+            })
+        })
+    } catch (error) {
+        return res.status(400).json({
+            status: "error",
+            mensaje: "Error al editar la playlist"
+        })
+    }
+}
+
+const deletePlaylist = (req, res) => {
+    const playlistId = req.params.id;
+
+    Playlist.findOneAndDelete({_id: playlistId}, (error, data) => {
+        if (error) {
+            return res.status(400).json({
+                status: "error",
+                mensaje: "Error al borrar la playlist"
+            })
+        }
+        return res.status(200).json({
+            status: "success",
+            info: data,
+            mensaje: "La playlist se ha borrado correctamente"
+        })
+    })
+}
+
 // Export
 module.exports = {
     getAllPlaylists,
-    createPlaylist
+    createPlaylist,
+    deletePlaylist,
+    editPlaylist
 }

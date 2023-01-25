@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const playlistController = require("../controller/playlists.controller")
-
+const jwtCheck = require("../middlewares/jwtCheck.middleware");
 
 // Rutas de prueba
 router.get("/prueba", (req, res) => {
@@ -13,8 +13,12 @@ router.get("/prueba", (req, res) => {
 });
 
 router.get("/get", playlistController.getAllPlaylists)
-// VALIDAR SI ESTA LOGEADO CON UN USUARIO?
-router.post('/createplaylist', playlistController.createPlaylist)
+
+router.post('/createplaylist', jwtCheck, playlistController.createPlaylist)
+
+router.put('/edit/:id', jwtCheck, playlistController.editPlaylist)
+
+router.delete("/delete/:id", jwtCheck, playlistController.deletePlaylist)
 
 
 module.exports = router;

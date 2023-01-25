@@ -62,9 +62,28 @@ const editAlbum = (req, res) => {
     })
 }
 
+const deleteAlbum = (req, res) => {
+    const albumId = req.params.id
+
+    Album.findOneAndDelete({_id: albumId}, (error, data) => {
+        if (error) {
+            return res.status(400).json({
+                status: "error",
+                mensaje: "Error al borrar el album"
+            })
+        }
+        return res.status(200).json({
+            status: "success",
+            info: data,
+            mensaje: "El album se ha eliminado correctamente"
+        })
+    })
+}
+
 // Export
 module.exports = {
     getAllAlbums,
     newAlbum,
-    editAlbum
+    editAlbum,
+    deleteAlbum
 }
