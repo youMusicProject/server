@@ -25,21 +25,29 @@ const userToArtist = (req, res) => {
         const params = req.body;
         // creamos el nuevo artista
         const new_artist = new Artist(params);
-        // Guardamos el nuevo artista
-        new_artist.save();
-        User.findByIdAndUpdate(params.userId, { $set: { role: "artist" } }, { new: true }, (error, data) => {
-            if (error || !data) {
-                return res.status(404).json({
-                    status: "error",
-                    mensaje: "Hay un error, o no se ha encontrado ninguna cancion"
+        try {
+            // Guardamos el nuevo artista
+            new_artist.save();
+            User.findByIdAndUpdate(params.userId, { $set: { role: "artist" } }, { new: true }, (error, data) => {
+                if (error || !data) {
+                    return res.status(404).json({
+                        status: "error",
+                        mensaje: "Hay un error, o no se ha encontrado ninguna cancion"
+                    });
+                }
+                return res.status(200).json({
+                    status: "success",
+                    user: data,
+                    artist: new_artist,
+                    mensaje: "El usuario se ha editado correctamente!"
                 });
-            }
-            return res.status(200).json({
-                status: "success",
-                info: data,
-                mensaje: "El usuario se ha editado correctamente!"
+            })
+        } catch (error) {
+            return res.status(404).json({
+                status: "error",
+                mensaje: "Hay un error al crear el artista"
             });
-        })
+        }
     } catch (error) {
         return res.status(404).json({
             status: "error",

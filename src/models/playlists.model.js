@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const PlaylistSchema = Schema({
     userId: {
         type: String,
-        default: 0
+        default: ""
     },
     name: {
         type: String,
@@ -24,7 +24,12 @@ const PlaylistSchema = Schema({
     tracks: {
         type: Array,
         default: []
-    }
+    },
+    tracks_pueba: {
+        type: Array,
+        default: []
+    },
+    
 
 });
 

@@ -13,7 +13,11 @@ const ArtistSchema = Schema({
         type: Array,
         default: []
     },
-    views: {
+    gender: {
+        type: String,
+        default: ""
+    },
+    population: {
         type: Number,
         default: 0
     },

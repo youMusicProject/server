@@ -21,10 +21,10 @@ const getAllPlaylists = (req, res) => {
 const createPlaylist = (req, res) => {
     try {
         // recoger params del body
-        let params = req.body
+        let params = req.body;
 
         // crea el objeto a guardar
-        const $playlist = new Playlist(params)
+        const $playlist = new Playlist(params);
 
         // guardar playlist en ddbb
         $playlist.save((error, data) => {
