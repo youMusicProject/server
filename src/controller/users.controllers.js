@@ -83,11 +83,32 @@ const editUser = (req, res) => {
     })
 }
 
+const followUser = (req, res) => {
+    
+    User.findByIdAndUpdate(req.params.id, req.body.followers)
+    User.findByIdAndUpdate(req.body.follow._id, req.body.follow, { new: true }, (error, data) => {
+        if (error || !data) {
+            return res.status(400).json({
+                status: "error",
+                response: false,
+                mensaje: "No se ha seguido el usuario"
+            })
+        }
+        return res.status(200).json({
+            status: "success",
+            info: data,
+            response: true,
+            mensaje: "El usuario se ha seguido correctamente"
+        })
+    })
+}
+
 
 
 // Export
 module.exports = {
     checkUser,
     createUser,
-    editUser
+    editUser,
+    followUser
 }

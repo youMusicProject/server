@@ -11,7 +11,9 @@ router.get('/check/:email', userController.checkUser)
 
 router.post('/new', jwtCheck, userController.createUser)
 
-router.put('/edit/:id', jwtCheck, userController.editUser)
+router
+    .put('/edit/:id', jwtCheck, userController.editUser)
+    .put('/follow/:id', jwtCheck, userController.followUser)
 
 
 
