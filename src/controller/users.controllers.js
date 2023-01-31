@@ -84,23 +84,50 @@ const editUser = (req, res) => {
 }
 
 const followUser = (req, res) => {
-    
-    User.findByIdAndUpdate(req.params.id, req.body.followers)
-    User.findByIdAndUpdate(req.body.follow._id, req.body.follow, { new: true }, (error, data) => {
+    const params = req.body;
+    console.log(params);
+    // Editamos usuario con el follow actualizado 
+    User.findByIdAndUpdate(req.params.id, params.followers, { new: true }, (error, data) => {
+        console.log(data);
+    });
+
+    // Editar usuario que RECIVE el follow
+    User.findById(params.follow.userId, (error, data) => {
         if (error || !data) {
             return res.status(400).json({
                 status: "error",
                 response: false,
-                mensaje: "No se ha seguido el usuario"
+                mensaje: "No se ha encontrado el usuario al que seguir"
             })
         }
-        return res.status(200).json({
-            status: "success",
-            info: data,
-            response: true,
-            mensaje: "El usuario se ha seguido correctamente"
+
+        const edited_user = {
+            ...data._doc,
+            followers: [...data._doc.followers, {
+                idUser: params.followers._id,
+                name: params.followers.userData.complete_name,
+                thumbnail: params.followers.userData.profilePicture
+            }]
+        }
+
+        User.findByIdAndUpdate(edited_user._id, edited_user, { new: true }, (error, data) => {
+            if (error || !data) {
+                return res.status(400).json({
+                    status: "error",
+                    response: false,
+                    mensaje: "No se ha seguido el usuario"
+                })
+            }
+            return res.status(200).json({
+                status: "success",
+                info: data,
+                response: true,
+                mensaje: "El usuario se ha seguido correctamente"
+            })
         })
-    })
+    }
+    )
+
 }
 
 
