@@ -14,8 +14,8 @@ const PlaylistSchema = Schema({
         default: ""
     },
     publicAccessible: {
-        type: Boolean,
-        default: true
+        type: String,
+        default: "true"
     },
     thumbnail: {
         type: String,

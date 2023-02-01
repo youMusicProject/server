@@ -46,6 +46,7 @@ const newTrack = (req, res) => {
 const editTrack = (req, res) => {
     const id = req.params.id;
     const params = req.body;
+
     Track.findByIdAndUpdate(id, params, { new: true }, (error, data) => {
         if (error || !data) {
             return res.status(400).json({
