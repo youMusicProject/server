@@ -85,10 +85,15 @@ const editUser = (req, res) => {
 
 const followUser = (req, res) => {
     const params = req.body;
-    console.log(params);
     // Editamos usuario con el follow actualizado 
     User.findByIdAndUpdate(req.params.id, params.followers, { new: true }, (error, data) => {
-        console.log(data);
+        if (error || !data) {
+            return res.status(400).json({
+                status: "error",
+                response: false,
+                mensaje: "No se ha encontrado el usuario al que editar los seguidos"
+            })
+        }
     });
 
     // Editar usuario que RECIVE el follow
