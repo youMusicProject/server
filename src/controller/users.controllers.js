@@ -147,10 +147,11 @@ const unFollow = (req, res) => {
                 mensaje: "Hay un error al buscar el usuario"
             })
         }
-        User.findByIdAndUpdate(body.idLogged, {$set: { follows: [data.follows.filter(e => e._id !== body.idArtist)] }}, { new: true }, (error, data) => {
+        User.findByIdAndUpdate(body.idLogged, {$set: { follows: data.follows.filter(e => e._id !== body.idArtist) }}, { new: true }, (error, data) => {
             console.log(data);
         });
-    })
+    });
+
     User.findById(body.artistUserId, (error, data) => {
         if (error || !data) {
             return res.status(400).json({
@@ -159,8 +160,14 @@ const unFollow = (req, res) => {
                 mensaje: "Hay un error al buscar el usuario"
             })
         }
-        User.findByIdAndUpdate(data._id, {$set: { followers: [data.followers.filter(e => e._id !== body.idLogged)] }}, { new: true }, (error, data) => {
-            console.log(data);
+
+        User.findByIdAndUpdate(data._id, {$set: { followers: data.followers.filter(e => e.idUser !== body.idLogged) }}, { new: true }, (error, data) => {
+            return res.status(200).json({
+                status: "success",
+                info: data,
+                response: true,
+                mensaje: "El usuario se ha dejado de seguir correctamente"
+            })
         });
     })
 }
