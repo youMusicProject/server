@@ -14,6 +14,7 @@ router.post('/new', jwtCheck, userController.createUser)
 router
     .put('/edit/:id', jwtCheck, userController.editUser)
     .put('/follow/:id', jwtCheck, userController.followUser)
+    .put('/unfollow', jwtCheck, userController.unFollow)
 
 
 

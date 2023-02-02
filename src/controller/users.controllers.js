@@ -127,7 +127,37 @@ const followUser = (req, res) => {
         })
     }
     )
+}
 
+const unFollow = (req, res) => {
+    const body = req.body;
+    
+    console.log(body);
+
+    User.findById(body.idLogged, (error, data) => {
+        if (error || !data) {
+            return res.status(400).json({
+                status: "error",
+                response: false,
+                mensaje: "Hay un error al buscar el usuario"
+            })
+        }
+        User.findByIdAndUpdate(body.idLogged, {$set: { follows: [data.follows.filter(e => e._id !== body.idArtist)] }}, { new: true }, (error, data) => {
+            console.log(data);
+        });
+    })
+    User.findById(body.artistUserId, (error, data) => {
+        if (error || !data) {
+            return res.status(400).json({
+                status: "error",
+                response: false,
+                mensaje: "Hay un error al buscar el usuario"
+            })
+        }
+        User.findByIdAndUpdate(data._id, {$set: { followers: [data.followers.filter(e => e._id !== body.idLogged)] }}, { new: true }, (error, data) => {
+            console.log(data);
+        });
+    })
 }
 
 
@@ -137,5 +167,6 @@ module.exports = {
     checkUser,
     createUser,
     editUser,
-    followUser
+    followUser,
+    unFollow
 }
